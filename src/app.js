@@ -4,6 +4,7 @@ const compress = require('compression');
 const helmet = require('helmet');
 const cors = require('cors');
 const logger = require('./logger');
+const cookieParser = require('cookie-parser');
 
 const feathers = require('@feathersjs/feathers');
 const configuration = require('@feathersjs/configuration');
@@ -28,6 +29,7 @@ app.configure(configuration(path.join(__dirname, '..')));
 app.use(helmet());
 app.use(cors());
 app.use(compress());
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));

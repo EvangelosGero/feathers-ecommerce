@@ -14,13 +14,25 @@ module.exports = function(app) {
     // real-time connection, e.g. when logging in via REST
     if(connection) {
       // Obtain the logged in user from the connection
-      // const user = connection.user;
+      const user = connection.user;
       
       // The connection is no longer anonymous, remove it
       app.channel('anonymous').leave(connection);
 
       // Add it to the authenticated user channel
       app.channel('authenticated').join(connection);
+
+
+      /*
+      //Organize by company (E.G.)
+
+      app.channel(`${user.company}`).join(connection);
+
+      const conns = app.channel('authenticated').connections;
+      const userArray = conns.map(conn => conn.user).map(user => user._id);
+      app.service('connectedusers')
+        .create({ users: userArray});
+      */
 
       // Channels can be named anything and joined on any condition 
       
@@ -32,9 +44,36 @@ module.exports = function(app) {
       
       // Easily organize users by email and userid for things like messaging
       // app.channel(`emails/${user.email}`).join(channel);
-      // app.channel(`userIds/$(user.id}`).join(channel);
+   //    app.channel(`userIds/$(user.id}`).join(channel);
     }
   });
+
+   // eslint-disable-next-line no-unused-vars
+   app.publish((data, hook) => {
+    // Here you can add event publishers to channels set up in `channels.js`
+    // To publish only for a specific event use `app.publish(eventname, () => {})`
+  
+    // e.g. to publish all service events to all authenticated users use
+    return app.channel('authenticated');
+  });
+
+  app.on('logout', (payload, { connection }) => {
+    if(connection) {
+     
+      //When logging out, leave all channels before joining anonymous channel
+      app.channel(app.channels).leave(connection);
+      app.channel('anonymous').join(connection);
+      const conns = app.channel('authenticated').connections;
+      const userArray = conns.map(conn => conn.user).map(user => user._id);
+ /*
+      if(Array.isArray(userArray) && userArray.length > 0)
+        app.service('connectedusers')
+          .create({ users: userArray});  
+  */    
+    }
+  });
+
+
 
   // eslint-disable-next-line no-unused-vars
   app.publish((data, hook) => {
@@ -49,15 +88,15 @@ module.exports = function(app) {
 
   //Send uploads service create only to connected user
 
- // app.service('uploads').publish('created', (data, context) => {    
-//        return app.channel(`userIds/${context.params.payload.userId}`)   
-//    })
+  app.service('uploads').publish('created', (data, context) => { 
+    return app.channel(`userIds/${context.params.headers.xuid}`)  
+    })
   
-  app.service('uploads').publish('created', (data, context) => {
-    myAdminChannel = app.channel(app.channels).filter(connection =>
-      connection.payload.userId === context.params.payload.userId);
-    return myAdminChannel;
-  });
+ // app.service('uploads').publish('created', (data, context) => {
+  //  myAdminChannel = app.channel(app.channels).filter(connection =>
+  //    connection.payload.userId === context.params.payload.userId);
+  //  return myAdminChannel;
+ // });
 
 
   // Here you can also add service specific event publishers

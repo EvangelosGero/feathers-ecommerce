@@ -18,11 +18,11 @@
       "header": {
         "typ": "access"
       },
-      "audience": "https://yourdomain.com",
+      "audience": "https://appdate.gr",
       "subject": "anonymous",
       "issuer": "feathers",
       "algorithm": "HS256",
-      "expiresIn": "1d"
+      "expiresIn": "2d"
     },
     "local": {
       "entity": "user",
