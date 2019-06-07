@@ -63,8 +63,8 @@ module.exports = function(app) {
       //When logging out, leave all channels before joining anonymous channel
       app.channel(app.channels).leave(connection);
       app.channel('anonymous').join(connection);
-      const conns = app.channel('authenticated').connections;
-      const userArray = conns.map(conn => conn.user).map(user => user._id);
+  //    const conns = app.channel('authenticated').connections;
+ //     const userArray = conns.map(conn => conn.user).map(user => user._id);
  /*
       if(Array.isArray(userArray) && userArray.length > 0)
         app.service('connectedusers')
