@@ -5,7 +5,7 @@ const hooks = require('./products.hooks');
 module.exports = function (app) {
   const paginate = app.get('paginate');
   const mongoClient = app.get('mongoClient');
-  const options = { paginate };
+  const options = { };
 
   // Initialize our service with any options it requires
   app.use('/products', createService(options));

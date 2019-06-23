@@ -1,4 +1,5 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
+const { discard , iff, isProvider } = require('feathers-hooks-common');
 
 module.exports = {
   before: {
@@ -13,8 +14,12 @@ module.exports = {
 
   after: {
     all: [],
-    find: [],
-    get: [],
+    find: [
+      
+    ],
+    get: [
+      
+    ],
     create: [],
     update: [],
     patch: [],
