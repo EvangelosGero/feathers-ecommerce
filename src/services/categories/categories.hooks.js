@@ -4,7 +4,7 @@ const { discard , iff, isProvider } = require('feathers-hooks-common');
 module.exports = {
   before: {
     all: [ 
-     // authenticate('jwt') 
+       authenticate('jwt') 
     ],
     find: [],
     get: [],
