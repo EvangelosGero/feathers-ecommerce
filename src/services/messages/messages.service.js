@@ -15,7 +15,7 @@ module.exports = function (app) {
   
   mongoClient.then(db => {
     db.collection('messages').dropIndex( { "createdAt" : 1 } )    
-    db.collection('messages').createIndex( { "createdAt": 1 }, { expireAfterSeconds: 2592000 } );
+    db.collection('messages').createIndex( { "createdAt": 1 }, { expireAfterSeconds: 12592000 } );
     service.Model = db.collection('messages');
   });
 

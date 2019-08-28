@@ -22,7 +22,7 @@ module.exports = function() {
       customerId,
       supplierId,
       // Add the current time via `getTime`
-     // createdAt: new Date()
+      createdAt: new Date()
     }} ;
        
    

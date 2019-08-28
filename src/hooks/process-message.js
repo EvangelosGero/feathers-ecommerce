@@ -20,7 +20,7 @@ module.exports = function() {
       senderId,
       receiverId,
       // Add the current time via `getTime`
-     // createdAt: new Date()
+      createdAt: new Date()
     }} ;
        
    
