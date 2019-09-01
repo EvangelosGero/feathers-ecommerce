@@ -1,12 +1,13 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 const { populate } = require('feathers-hooks-common');
+const createdAtHook = require('../../hooks/createdAt');
 
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],
     find: [],
     get: [],
-    create: [],
+    create: [createdAtHook()],
     update: [],
     patch: [],
     remove: []

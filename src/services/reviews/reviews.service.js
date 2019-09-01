@@ -5,7 +5,7 @@ const hooks = require('./reviews.hooks');
 module.exports = function (app) {
   const paginate = app.get('paginate');
   const mongoClient = app.get('mongoClient');
-  const options = {  };
+  const options = { paginate };
 
   // Initialize our service with any options it requires
   app.use('/reviews', createService(options));
